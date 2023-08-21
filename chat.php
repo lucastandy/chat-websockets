@@ -3,6 +3,13 @@
 session_start(); // Serve para iniciar a sessão
 ob_start(); // Limpar o buffer de saída para evitar erro de redirecionamento
 
+// Verificando se as variáveis sessions estão criadas
+if (!isset($_SESSION['usuario_id']) or !isset($_SESSION['nome'])) {
+    $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Necessário realizar o login para acessar a página!</p>";
+    header("Location: index.php");
+    exit();
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -15,10 +22,13 @@ ob_start(); // Limpar o buffer de saída para evitar erro de redirecionamento
 
 <body>
     <h2>Chat</h2>
+    <a href="sair.php">Sair</a><br><br>
 
     <!-- Imprimir o nome do usuário que está ne sessão -->
-    <p>Bem-vindo <span id="nome-usuario"><?php echo $_SESSION['usuario'] ?></span></p>
+    <p>Bem-vindo <span id="nome-usuario"><?php echo $_SESSION['nome'] ?></span></p>
 
+    <!-- Campo oculto com o id do usuário -->
+    <input type="hidden" name="usuario_id" id="usuario_id" value="<?php echo $_SESSION['usuario_id']; ?>">
 
     <!-- Campo para o usuário digitar a nova mensagem -->
     <label>Nova mensagem: </label>
@@ -48,9 +58,7 @@ ob_start(); // Limpar o buffer de saída para evitar erro de redirecionamento
             let resultado = JSON.parse(mensagemRecebida.data);
 
             // Enviar a mensagem para o HTML, inserir no final da lista de mensagens
-            mensagemChat.insertAdjacentHTML('beforeend', `${resultado.mensagem} <br>`);
-
-
+            mensagemChat.insertAdjacentHTML('beforeend', `${resultado.nome} : ${resultado.mensagem} <br>`);
 
         }
 
@@ -61,9 +69,20 @@ ob_start(); // Limpar o buffer de saída para evitar erro de redirecionamento
 
             let nomeUsuario = document.getElementById("nome-usuario").textContent;
 
+            // Recuperar o id do usuário
+            let usuarioId = document.getElementById("usuario_id").value;
+
+            if (usuarioId === "") {
+                alert("Erro: Necessário realizar o login para acessar a página!");
+                window.location.href = "index.php";
+                return;
+            }
+
             // Criar o array de dados para enviar para Websocket
             let dados = {
-                mensagem: `${nomeUsuario}:  ${mensagem.value}`
+                mensagem: `${mensagem.value}`,
+                usuario_id: usuarioId,
+                nome: nomeUsuario
             }
 
             // Enviar a mensagem para websocket
@@ -75,11 +94,8 @@ ob_start(); // Limpar o buffer de saída para evitar erro de redirecionamento
             // Limpar o campo mensagem
             mensagem.value = '';
 
-
         }
     </script>
-
-
 
 </body>
 
