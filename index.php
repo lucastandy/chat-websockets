@@ -13,10 +13,10 @@ include_once './conexao.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tandy - Chat</title>
+    <link rel="stylesheet" href="css/custom.css">
 </head>
 
 <body>
-    <h1>Acessar o Chat</h1>
 
     <?php
     // Exemplo criptografar a senha
@@ -55,35 +55,44 @@ include_once './conexao.php';
                 // Redirecionar para o chat
                 header("Location: chat.php");
             } else {
-                $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Usuário ou senha inválida!</p>";
+                $_SESSION['msg'] = "<p class='alert-erro'>Erro: Usuário ou senha inválida!</p>";
             }
         } else {
-            $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Usuário ou senha inválida!</p>";
+            $_SESSION['msg'] = "<p class='alert-erro'>Erro: Usuário ou senha inválida!</p>";
         }
     }
-
-    // Verificar se existe a variável msg
-    if (isset($_SESSION['msg'])) {
-        // Imprimir o valor da variável global
-        echo $_SESSION['msg'];
-        // Apagar o valor da variável global
-        unset($_SESSION['msg']);
-    }
-
-
     ?>
-
-    <form method="POST" action="">
-        <label>Nomes: </label>
-        <input type="text" name="usuario" placeholder="Digite o nome">
-        <br><br>
-        <label>Senha: </label>
-        <input type="password" name="senha_usuario" placeholder="Digite a senha">
-        <br><br>
-
-        <input type="submit" name="acessar" value="Acessar"><br><br>
-
-    </form>
+    <div class="container">
+        <div class="conteudo">
+            <div class="header">Meu chat sobre...</div>
+            <!-- Início do formulário para o usuário acessar o chat -->
+            <form method="POST" action="">
+                <?php
+                // Verificar se existe a variável msg
+                if (isset($_SESSION['msg'])) {
+                    // Imprimir o valor da variável global
+                    echo $_SESSION['msg'];
+                    // Apagar o valor da variável global
+                    unset($_SESSION['msg']);
+                }
+                ?>
+                <div class="campo">
+                    <label>Nomes: </label>
+                    <input type="text" name="usuario" placeholder="Digite o usuário">
+                </div>
+                <div class="campo">
+                    <label>Senha: </label>
+                    <input type="password" name="senha_usuario" placeholder="Digite a senha">
+                </div>
+                <input type="submit" name="acessar" class="btn-acessar" id="btnAcessar" value="Acessar"><br><br>
+            </form>
+            <!-- Fim do formulário para o usuário acessar o chat -->
+            Usuário: cesar@celke.com.br<br>
+            Senha: 123456<br><br>
+            Usuário: lucastitandy@gmail.com<br>
+            Senha: 123456<br><br>
+        </div>
+    </div>
 
 </body>
 

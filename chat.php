@@ -5,7 +5,7 @@ ob_start(); // Limpar o buffer de saída para evitar erro de redirecionamento
 
 // Verificando se as variáveis sessions estão criadas
 if (!isset($_SESSION['usuario_id']) or !isset($_SESSION['nome'])) {
-    $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Necessário realizar o login para acessar a página!</p>";
+    $_SESSION['msg'] = "<p class='alert-erro'>Erro: Necessário realizar o login para acessar a página!</p>";
     header("Location: index.php");
     exit();
 }
@@ -18,27 +18,35 @@ if (!isset($_SESSION['usuario_id']) or !isset($_SESSION['nome'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lucas - WebSocket</title>
+    <link rel="stylesheet" href="css/custom.css">
 </head>
 
 <body>
-    <h2>Chat</h2>
-    <a href="sair.php">Sair</a><br><br>
+    <div class="container">
+        <div class="conteudo-chat">
+            <div class="header-chat">
+                <div class="usuario-dados">
+                    <img src="api/imagens/celke.jpg" class="img-usuario" alt="<?php echo $_SESSION['nome']; ?>">
+                    <div class="nome-usuario" id="nome-usuario"><?php echo $_SESSION['nome']; ?></div>
+                </div>
+                <div class="sair">
+                    <a href="sair.php" class="btn-sair">Sair</a>
+                </div>
+            </div>
+            <div class="chat-box" id="chatbox">
+                <span id="mensagem-chat"></span>
+            </div>
+            <form class="enviar-msg">
+                <!-- Campo oculto com o id do usuário -->
+                <input type="hidden" name="usuario_id" id="usuario_id" value="<?php echo $_SESSION['usuario_id']; ?>">
 
-    <!-- Imprimir o nome do usuário que está ne sessão -->
-    <p>Bem-vindo <span id="nome-usuario"><?php echo $_SESSION['nome'] ?></span></p>
+                <!-- Campo para o usuário digitar a nova mensagem -->
+                <input type="text" name="mensagem" id="mensagem" class="campo-msg" placeholder="Mensagem...">
+                <input type="button" name="btnEnviar" class="btn-enviar-msg" onclick="enviar()" value="Enviar">
 
-    <!-- Campo oculto com o id do usuário -->
-    <input type="hidden" name="usuario_id" id="usuario_id" value="<?php echo $_SESSION['usuario_id']; ?>">
-
-    <!-- Campo para o usuário digitar a nova mensagem -->
-    <label>Nova mensagem: </label>
-    <input type="text" name="mensagem" id="mensagem" placeholder="Digite a mensagem">
-    <br><br>
-    <input type="button" onclick="enviar()" value="Enviar">
-    <br><br>
-
-    <!-- Receber as mensagens do chat enviado pelo JavaScript -->
-    <span id="mensagem-chat"></span>
+            </form>
+        </div>
+    </div>
 
     <script>
         // Recuperar o id que deve receber as mensagens do chat
@@ -58,7 +66,14 @@ if (!isset($_SESSION['usuario_id']) or !isset($_SESSION['nome'])) {
             let resultado = JSON.parse(mensagemRecebida.data);
 
             // Enviar a mensagem para o HTML, inserir no final da lista de mensagens
-            mensagemChat.insertAdjacentHTML('beforeend', `${resultado.nome} : ${resultado.mensagem} <br>`);
+            mensagemChat.insertAdjacentHTML('beforeend', `<div class="msg-recebida">
+                    <div class="det-msg-recebida">
+                        <p class="texto-msg-recebida">${resultado.nome}: ${resultado.mensagem}</p>
+                    </div>
+                </div>`);
+
+            // Role para o final após adicionar as mensagens
+            scrollBottom();
 
         }
 
@@ -89,11 +104,23 @@ if (!isset($_SESSION['usuario_id']) or !isset($_SESSION['nome'])) {
             ws.send(JSON.stringify(dados));
 
             // Enviar a mensagem para o HTML, inserir no final da lista de mensagens
-            mensagemChat.insertAdjacentHTML('beforeend', `${nomeUsuario}: ${mensagem.value} <br>`);
+            mensagemChat.insertAdjacentHTML('beforeend', `<div class="msg-enviada">
+                    <div class="det-msg-enviada">
+                        <p class="texto-msg-enviada">${nomeUsuario}: ${mensagem.value}</p>
+                    </div>
+                </div>`);
 
             // Limpar o campo mensagem
             mensagem.value = '';
 
+            // Role para o final após adicionar as mensagens
+            scrollBottom();
+        }
+
+
+        function scrollBottom() {
+            var chatbox = document.getElementById("chatbox");
+            chatbox.scrollTop = chatbox.scrollHeight;
         }
     </script>
 
