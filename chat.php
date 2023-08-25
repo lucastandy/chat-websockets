@@ -33,7 +33,7 @@ if (!isset($_SESSION['usuario_id']) or !isset($_SESSION['nome'])) {
                     <a href="sair.php" class="btn-sair">Sair</a>
                 </div>
             </div>
-            <div class="chat-box" id="chatbox">
+            <div class="chat-box" id="chatBox">
                 <span id="mensagem-chat"></span>
             </div>
             <form class="enviar-msg">
@@ -48,81 +48,7 @@ if (!isset($_SESSION['usuario_id']) or !isset($_SESSION['nome'])) {
         </div>
     </div>
 
-    <script>
-        // Recuperar o id que deve receber as mensagens do chat
-        const mensagemChat = document.getElementById("mensagem-chat");
-
-        // Endereço do websocket
-        const ws = new WebSocket('ws://localhost:8085');
-
-        // Realizar a conexão com websocket
-        ws.onopen = (e) => {
-            console.log('Conectado!');
-        }
-
-        // Receber a mensagem do WebSocket
-        ws.onmessage = (mensagemRecebida) => {
-            // Ler as mensagens enviada pelo WebSocket
-            let resultado = JSON.parse(mensagemRecebida.data);
-
-            // Enviar a mensagem para o HTML, inserir no final da lista de mensagens
-            mensagemChat.insertAdjacentHTML('beforeend', `<div class="msg-recebida">
-                    <div class="det-msg-recebida">
-                        <p class="texto-msg-recebida">${resultado.nome}: ${resultado.mensagem}</p>
-                    </div>
-                </div>`);
-
-            // Role para o final após adicionar as mensagens
-            scrollBottom();
-
-        }
-
-        // Função responsável em enviar a mensagem
-        const enviar = () => {
-            // Recupera o id do campo mensagem
-            let mensagem = document.getElementById("mensagem");
-
-            let nomeUsuario = document.getElementById("nome-usuario").textContent;
-
-            // Recuperar o id do usuário
-            let usuarioId = document.getElementById("usuario_id").value;
-
-            if (usuarioId === "") {
-                alert("Erro: Necessário realizar o login para acessar a página!");
-                window.location.href = "index.php";
-                return;
-            }
-
-            // Criar o array de dados para enviar para Websocket
-            let dados = {
-                mensagem: `${mensagem.value}`,
-                usuario_id: usuarioId,
-                nome: nomeUsuario
-            }
-
-            // Enviar a mensagem para websocket
-            ws.send(JSON.stringify(dados));
-
-            // Enviar a mensagem para o HTML, inserir no final da lista de mensagens
-            mensagemChat.insertAdjacentHTML('beforeend', `<div class="msg-enviada">
-                    <div class="det-msg-enviada">
-                        <p class="texto-msg-enviada">${nomeUsuario}: ${mensagem.value}</p>
-                    </div>
-                </div>`);
-
-            // Limpar o campo mensagem
-            mensagem.value = '';
-
-            // Role para o final após adicionar as mensagens
-            scrollBottom();
-        }
-
-
-        function scrollBottom() {
-            var chatbox = document.getElementById("chatbox");
-            chatbox.scrollTop = chatbox.scrollHeight;
-        }
-    </script>
+    <script src="js/custom.js"></script>
 
 </body>
 
