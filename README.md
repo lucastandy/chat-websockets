@@ -2,7 +2,7 @@
 
 # Sobre o projeto
 Este projeto foi desenvolvido com base em uma série de tutoriais do canal da Celke, no YouTube.
-Esta aplicação simula o chat entre dois usuários. As mensagens são salvas em um banco de dados toda vez que um dos usuário envia a mensagem.
+Esta aplicação simula um chat entre dois usuários. As mensagens são salvas em um banco de dados toda vez que um dos usuários envia a mensagem.
 
 # Layout da aplicação
 Tela de Login:
@@ -13,7 +13,7 @@ Chat da aplicação:
 
 ![Chat da aplicação](https://github.com/lucastandy/chat-websockets/blob/main/assets/chat.png)
 
-# Tecnlogias Utizadas:
+# Tecnlogias Utilizadas:
 
 ## Back end
 * PHP;
@@ -29,18 +29,18 @@ OBS: antes de rodar o projeto, crie o banco de dados com o arquivo bd.sql presen
 ### A instrução abaixo verifica se o Composer está instalado:
 `composer`
 
-### Instalar todas as dependencias indicada pelo package.json:
+### Instalar todas as dependências indicada pelo package.json:
 `composer install`
 
 # Rodar o projeto com PHP
-### Para executar o projeto é necessário acessar o diretório api através do terminal ou prompt de comando e digitar a seguinte instrução:
+### Para executar o projeto é necessário acessar o diretório **api** através do terminal ou prompt de comando e digitar a seguinte instrução:
 `php servidor_chat.php`
 
 # Sequência para criar o projeto do Zero
 ## Verificar se o composer está instalado:
 `composer`
 
-## Instalar a dependencias Ratchet, biblioteca PHP que permite criar aplicativos de tempo real baseados em WebSockets
+## Instalar a dependencia Ratchet, biblioteca PHP que permite criar aplicativos de tempo real baseados em WebSockets:
 `composer require cboden/ratchet`
 
 ## Depois é só executar o projeto com o comando:
