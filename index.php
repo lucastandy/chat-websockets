@@ -87,9 +87,9 @@ include_once './conexao.php';
                 <input type="submit" name="acessar" class="btn-acessar" id="btnAcessar" value="Acessar"><br><br>
             </form>
             <!-- Fim do formulário para o usuário acessar o chat -->
-            Usuário: cesar@celke.com.br<br>
-            Senha: 123456<br><br>
             Usuário: lucastitandy@gmail.com<br>
+            Senha: 123456<br><br>
+            Usuário: lucasteste@gmail.com<br>
             Senha: 123456<br><br>
         </div>
     </div>
