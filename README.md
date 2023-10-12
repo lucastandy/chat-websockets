@@ -5,6 +5,13 @@ Este projeto foi desenvolvido com base em uma série de tutoriais do canal da Ce
 Esta aplicação simula o chat entre dois usuários. As mensagens são salvas em um banco de dados toda vez que um dos usuário envia a mensagem.
 
 # Layout da aplicação
+Tela de Login:
+
+![Login da aplicação](https://github.com/lucastandy/chat-websockets/blob/main/assets/login_do_chat.png)
+
+Chat da aplicação:
+
+![Chat da aplicação](https://github.com/lucastandy/chat-websockets/blob/main/assets/chat.png)
 
 # Tecnlogias Utizadas:
 
@@ -25,7 +32,7 @@ OBS: antes de rodar o projeto, crie o banco de dados com o arquivo bd.sql presen
 ### Instalar todas as dependencias indicada pelo package.json:
 `composer install`
 
-## Rodar o projeto com PHP
+# Rodar o projeto com PHP
 ### Para executar o projeto é necessário acessar o diretório api através do terminal ou prompt de comando e digitar a seguinte instrução:
 `php servidor_chat.php`
 
@@ -38,3 +45,8 @@ OBS: antes de rodar o projeto, crie o banco de dados com o arquivo bd.sql presen
 
 ## Depois é só executar o projeto com o comando:
 `php servidor_chat.php`
+
+# Autor
+Lucas Tandy do Nascimento Silva.
+
+https://www.linkedin.com/in/lucas-tandy/
